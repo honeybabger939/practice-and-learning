@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Wi-Fi Analytics — Report v0 (prototype)</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+    h1,h2 { margin: 0 0 8px; }
+    .meta, footer { font-size: 12px; color: #444; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 6px 8px; font-size: 14px; }
+    th { background: #f3f5f7; text-align: left; }
+    .params { margin: 8px 0 12px; }
+    .heatmap { margin: 12px 0; border: 1px dashed #bbb; padding: 8px; text-align:center; }
+  </style>
+</head>
+<body>
+  <h1>Wi-Fi Analytics — Report v0</h1>
+  <div class="meta">Generated: 2025-08-22 11:30 • Dataset: mock_scans.csv</div>
+
+  <div class="params"><strong>Parameters:</strong> SSID=UTS_* • Band=2.4/5 • Time=2025-08-15</div>
+
+  <h2>Evidence (sample rows)</h2>
+  <table>
+    <thead>
+      <tr><th>SSID</th><th>BSSID (hashed)</th><th>Enc</th><th>Band</th><th>Ch</th><th>RSSI</th><th>Timestamp</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>UTS_Guest</td><td>7ff98a…</td><td>WPA2</td><td>2.4</td><td>6</td><td>-62</td><td>2025-08-15T10:37:21Z</td></tr>
+      <tr><td>UTS_Staff</td><td>31aa02…</td><td>WPA2</td><td>5</td><td>44</td><td>-71</td><td>2025-08-15T10:38:10Z</td></tr>
+    </tbody>
+  </table>
+
+  <div class="heatmap">
+    <em>Heatmap PNG placeholder</em><br>
+    <img src="../images/heatmap_dummy.png" alt="heatmap" style="max-width:100%;height:auto;">
+  </div>
+
+  <footer>
+    MACs pseudonymised; data captured under written permission. See Minutes 2025-08-05.
+  </footer>
+</body>
+</html>
