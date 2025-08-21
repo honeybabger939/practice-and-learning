@@ -1,0 +1,4 @@
+ssid,bssid_hash,enc,band,channel,rssi,ts,lat,lon,anchor_id
+UTS_Guest,7ff98a...,WPA2,2.4,6,-62,2025-08-15T10:37:21Z,,,
+UTS_Staff,31aa02...,WPA2,5,44,-71,2025-08-15T10:38:10Z,-33.883,151.200,
+UTS_Guest,7ff98a...,WPA2,2.4,6,-57,2025-08-15T10:39:05Z,,,-A1
