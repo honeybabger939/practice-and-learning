@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <form method="get" action="/reports" class="row">
+    <!-- CSRF token (visible for screenshot; GET requests are not checked) -->
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <div>
+      <label>SSID<br><input name="ssid" value="{{ request.args.get('ssid','') }}" placeholder="UTS-Visitor"></label>
+    </div>
+    <div>
+      <label>BSSID hash<br><input name="bssid_hash" value="{{ request.args.get('bssid_hash','') }}" placeholder="a1b2c3..."></label>
+    </div>
+    <div>
+      <label>Channel<br><input name="channel" type="number" value="{{ request.args.get('channel','') }}" placeholder="1"></label>
+    </div>
+    <div>
+      <label>Start (UTC)<br><input name="start" type="datetime-local" value="{{ request.args.get('start','') }}"></label>
+    </div>
+    <div>
+      <label>End (UTC)<br><input name="end" type="datetime-local" value="{{ request.args.get('end','') }}"></label>
+    </div>
+    <div style="align-self:end;">
+      <button class="btn btn-primary" type="submit">Apply filters</button>
+      <a class="btn btn-light" href="/reports">Reset</a>
+    </div>
+  </form>
+  <p class="muted">CSRF token (for evidence): <code>{{ request.args.get('csrf_token','(generated)') }}</code></p>
+</div>
+
+<div class="card" style="margin-top:12px;">
+  <div class="row">
+    <div>
+      <img src="/{{ heat_rel_path }}" alt="heatmap" style="max-width:520px; border-radius:8px; border:1px solid #ddd;">
+      <div style="margin-top:8px;">
+        <a class="btn" href="{{ export_url }}">Export PDF (current filters)</a>
+      </div>
+      <p class="muted">The same colormap is used for UI and PDF.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:12px;">
+  <h3>Results (server-side pagination)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>TS (UTC)</th><th>SSID</th><th>BSSID hash</th><th>Ch</th><th>RSSI</th><th>Lat</th><th>Lon</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in items %}
+      <tr>
+        <td>{{ s.ts }}</td>
+        <td>{{ s.ssid }}</td>
+        <td>{{ s.bssid_hash }}</td>
+        <td>{{ s.channel }}</td>
+        <td>{{ s.rssi }}</td>
+        <td>{{ '%.6f'|format(s.lat or 0) }}</td>
+        <td>{{ '%.6f'|format(s.lon or 0) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="pagination" style="margin-top:8px;">
+    {% set prev = page - 1 %}
+    {% set next = page + 1 %}
+    {% if prev >= 1 %}
+      <a href="{{ url_for('reports', ssid=request.args.get('ssid',''), bssid_hash=request.args.get('bssid_hash',''), channel=request.args.get('channel',''), start=request.args.get('start',''), end=request.args.get('end',''), page=prev) }}">&laquo; Prev</a>
+    {% endif %}
+    <span>Page {{ page }}</span>
+    {% if (page * page_size) < total %}
+      <a href="{{ url_for('reports', ssid=request.args.get('ssid',''), bssid_hash=request.args.get('bssid_hash',''), channel=request.args.get('channel',''), start=request.args.get('start',''), end=request.args.get('end',''), page=next) }}">Next &raquo;</a>
+    {% endif %}
+    <span class="muted">Total: {{ total }}</span>
+  </div>
+</div>
+{% endblock %}
