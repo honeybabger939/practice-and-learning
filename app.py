@@ -147,6 +147,7 @@ def reports():
 
 # -------- export PDF with parameters block ----------
 @app.get("/export-pdf")
+# export-pdf-v2: embeds heatmap + parameters block + footer
 def export_pdf():
     f = _current_filters()
     session = Session()
